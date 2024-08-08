@@ -1,0 +1,26 @@
+
+<%- layout('layouts/bp.ejs') %>
+
+    <body>
+        <h3>All Listing</h3>
+        <form method="Get" action="/listing/New">
+            <button>Create New</button>
+        </form>    
+    <ol>
+    <% for (let list of allListing){  %>
+        <br style="background-color: red;">
+        <li> <h4> <a href="/listing/<%= list._id %>"><%= list.title %></a></h4> </li>   
+
+            <!-- <h5><%= list.description %></h5>
+            <img src="<%= list.image %>" >
+            <h5><%= list.price %></h5>
+            <h5><%= list.location %></h5>
+            <h5><%= list.country %></h5> -->
+            
+        <%  }%>
+    </ol>    
+
+    </body>
+
+
+
