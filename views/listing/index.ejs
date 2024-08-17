@@ -1,26 +1,22 @@
-
 <%- layout('layouts/bp.ejs') %>
 
-    <body>
-        <h3>All Listing</h3>
-        <form method="Get" action="/listing/New">
-            <button>Create New</button>
-        </form>    
+    <h3>All Listing</h3>
     <ol>
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
     <% for (let list of allListing){  %>
-        <br style="background-color: red;">
-        <li> <h4> <a href="/listing/<%= list._id %>"><%= list.title %></a></h4> </li>   
+        <a href="/listing/<%=list._id %>" class="listing-link">
+            <div class="card col" >
+                <img src="<%= list.image %>" class="card-img-top " alt="Listing_Image" style="height: 20rem;">
+                <div class="card-img-overlay"></div>
 
-            <!-- <h5><%= list.description %></h5>
-            <img src="<%= list.image %>" >
-            <h5><%= list.price %></h5>
-            <h5><%= list.location %></h5>
-            <h5><%= list.country %></h5> -->
-            
+                <div class="card-body">
+                    <p class="card-text"> <b> <%= list.title %> </b> <br>
+                       PKR <%= Number(list.price).toLocaleString("en-IN") %> / night
+                    </p>
+                </div>
+            </div>
+        </a>
         <%  }%>
-    </ol>    
 
-    </body>
-
-
-
+</div>
+    </ol>

@@ -20,4 +20,4 @@ const initDB = async () => {
     console.log("data is saved")
 }
 
-initDB();
+initDB();    

@@ -16,10 +16,16 @@ app.set("view engine","ejs")
 app.set("views",path.join(__dirname,"views"))
 app.use(express.urlencoded({extended: true}))
 
+
 //ejs-mathe
 const ejsMate = require("ejs-mate");
 app.engine("ejs", ejsMate);
 
+// Serve static files from the "public" directory
+app.use(express.static(path.join(__dirname, "/public")))
+
+// exporting wrap async function
+const wrapAsync = require("./utils/wrapasync.js");
 
 const DB_URL = "mongodb://127.0.0.1:27017/wanderlust"
 
@@ -49,26 +55,12 @@ app.get("/listing/New", async (req,res)=>{
 })
 
 //Create Route
-app.post("/listing", async (req,res)=>{
-    // const {title,description,price,location,country} = req.body;
-    const newListing = new Listing( req.body.listing);
-    await newListing.save();
-
-    res.redirect("/listing");
-    // console.log(listing);  
-    
-    // const newListing = new Listing({
-    //     title:title,
-    //     description:description,
-    //      image:image,
-    //     price:price,
-    //     location:location,
-    //     country:country,
-    // })
-    // await newListing.save();
-    // res.redirect("/listing");
-
-})
+app.post("/listing", wrapAsync( async (req,res,next) =>{
+        const newListing = new Listing( req.body.listing);
+        await newListing.save();
+        res.redirect("/listing");        
+    }
+))
 
 
 //show route
@@ -103,19 +95,10 @@ app.delete("/listing/:id", async (req,res)=>{
     res.redirect("/listing");
 })
 
-// app.get("/test",async (req,res)=>{
-//     let sample_listing = new Listing({
-//         title: "My Listing",
-//         description:"by the beach",
-//         price: 200,        
-//         location:"lahore",
-//         country: "pakistan",
-//     })
-//     await sample_listing.save();
-//     console.log("sample was saved");
-//     res.send("data saved")    
-// })
-
+// Error handling middlewares
+app.use((err,req,res,next)=>{
+    res.send("something went wrong");
+})
 
 app.listen(8080,()=>{
     console.log("server is running on port 8080");

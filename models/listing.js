@@ -14,7 +14,7 @@ const listingSchema = new Schema({
         set: (v) => v === '' ? "https://unsplash.com/photos/a-man-holding-a-fire-hose-in-front-of-a-large-fire-jUSQU1D-dds" 
         : v,
     },
-    price: String,
+    price: Number,
     location: String,
     country: String
 })
